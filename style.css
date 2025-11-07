@@ -20,3 +20,15 @@
 .rightPlayerInformation {
     border: solid blue 1px;
 }
+
+.gameBoardContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr;    
+}
+
+.gameSquare {
+    border: solid green 1px;
+}
