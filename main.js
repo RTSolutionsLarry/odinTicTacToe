@@ -28,6 +28,8 @@ const gameboard = ( function () {
 })();
 
 const game = (() => {
+    let win = false;
+
     const checkForWin = (arrayOfMoves) => {
         const winConditionOne = [1,2,3];
         const winConditionTwo = [4,5,6];
@@ -46,10 +48,17 @@ const game = (() => {
             winConditionFive.every(value => arrayOfMoves.includes(value)) ||
             winConditionSix.every(value => arrayOfMoves.includes(value)) ||
             winConditionSeven.every(value => arrayOfMoves.includes(value)) ||
-            winConditionEight.every(value => arrayOfMoves.includes(value)) ||
-        )
+            winConditionEight.every(value => arrayOfMoves.includes(value))
+        ) {
+            win = true;  
+        }
+        return win;
     }
+    
 })();
+
+console.log(game.checkForWin([1,2,3]));
+
 
 const createPlayer = (name,icon) => {
     const playerMoves = [];
