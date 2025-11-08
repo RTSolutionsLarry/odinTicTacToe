@@ -1,0 +1,20 @@
+PreGame
+ - Create gameboard using grid
+ - Make each grid item clickable (method=playerMove)
+ - Input to add Player 1 (name, icon, array of moves)
+ - Input to add Player 2
+
+During game
+ - When gameSquare is clicked, run <playerMove>
+ - playerMove: add grid array item to playerGrid 
+ - check for win condition. If player wins:
+    - end game
+    - increase score
+    - accounce winner
+    - display New Game button
+ - check if board is full. If board is full: 
+    - end game 
+    - announce tie
+    - display New Game button
+ - switch to next player and start over
+End of game

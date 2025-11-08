@@ -6,8 +6,7 @@ const gameboard = ( function () {
         for (let i = 0; i < size; i++) {
             gridSize = gridSize + ' 1fr';
             console.log(gridSize);
-        }
-        
+        } 
 
         gameBoardContainer.style.gridTemplateColumns = gridSize; 
 
@@ -17,7 +16,6 @@ const gameboard = ( function () {
                 gameSquare.classList.add('gameSquare');
                 gameBoardContainer.appendChild(gameSquare);
             }
-
         }
     }
     return {createBoard};
