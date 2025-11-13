@@ -29,8 +29,10 @@ const gameboard = ( function () {
 
 const game = (() => {
     let win = false;
+    const isWon = () => win;
 
     const checkForWin = (arrayOfMoves) => {
+        
         const winConditionOne = [1,2,3];
         const winConditionTwo = [4,5,6];
         const winConditionThree = [7,8,9];
@@ -52,13 +54,9 @@ const game = (() => {
         ) {
             win = true;  
         }
-        return win;
-    }
-    
+    } 
+    return {isWon , checkForWin};
 })();
-
-console.log(game.checkForWin([1,2,3]));
-
 
 const createPlayer = (name,icon) => {
     const playerMoves = [];
@@ -70,3 +68,11 @@ const createPlayer = (name,icon) => {
 }
 
 gameboard.createBoard(3);
+console.log(game.isWon());
+const moves = [1,4,7];
+console.log(game.checkForWin(moves));
+console.log(game.isWon());
+
+
+
+
