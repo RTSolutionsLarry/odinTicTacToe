@@ -29,8 +29,12 @@ const gameboard = ( function () {
 
 const game = (() => {
     let win = false;
-    const isWon = () => win;
+    const playerList = [];    
+    let activePlayer = {};
 
+    const isWon = () => win;
+    const getPlayerList = () => playerList;
+    const getActivePlayer = () => activePlayer;
     const checkForWin = (arrayOfMoves) => {
         
         const winConditionOne = [1,2,3];
@@ -54,25 +58,47 @@ const game = (() => {
         ) {
             win = true;  
         }
-    } 
-    return {isWon , checkForWin};
+    }
+    const addPlayerToGame = (player) => {
+        playerList.push(player);
+    }
+    
+    const changeActivePlayer = () => {
+        if (playerList[0].myTurn) {
+            playerList[0].myTurn = false;
+            playerList[1].myTurn = true;
+        } else {
+            playerList[0].myTurn = true;
+            playerList[1].myTurn = false;
+        }
+    }
+
+
+    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, changeActivePlayer};
 })();
 
 const createPlayer = (name,icon) => {
     const playerMoves = [];
+    let myTurn = false
 
     const getPlayerMoves = () => playerMoves;
     const addPlayerMoves = (gridNumber) => playerMoves.push(gridNumber);
-
-    return {name,icon,getPlayerMoves,addPlayerMoves};
+    const getMyTurn = () => myTurn;
+    const changeTurn = () => {
+        if (myTurn) {
+            myTurn = false;
+        } else {
+            myTurn = true;
+        }
+    }
+    return {name,icon,getPlayerMoves,addPlayerMoves,getMyTurn,changeTurn};
 }
 
 gameboard.createBoard(3);
-console.log(game.isWon());
-const moves = [1,4,7];
-console.log(game.checkForWin(moves));
-console.log(game.isWon());
-
+const larry = createPlayer('Larry','X');
+const jasmine = createPlayer('Jasmine','O');
+game.addPlayerToGame(larry);
+game.addPlayerToGame(jasmine);
 
 
 
