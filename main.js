@@ -30,7 +30,7 @@ const gameboard = ( function () {
 const game = (() => {
     let win = false;
     const playerList = [];    
-    let activePlayer = {};
+    let activePlayer;
 
     const isWon = () => win;
     const getPlayerList = () => playerList;
@@ -62,6 +62,12 @@ const game = (() => {
     const addPlayerToGame = (player) => {
         playerList.push(player);
     }
+
+    const randomizeActivePlayer = () => {
+        const randomIndex = Math.floor(Math.random() * playerList.length);
+        const randomPlayer = playerList[randomIndex];
+        randomPlayer.setMyTurn(true);        
+    }
     
     const changeActivePlayer = () => {
         if (playerList[0].myTurn) {
@@ -74,16 +80,19 @@ const game = (() => {
     }
 
 
-    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, changeActivePlayer};
+    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer};
 })();
 
 const createPlayer = (name,icon) => {
     const playerMoves = [];
-    let myTurn = false
+    let myTurn = false;
 
     const getPlayerMoves = () => playerMoves;
     const addPlayerMoves = (gridNumber) => playerMoves.push(gridNumber);
     const getMyTurn = () => myTurn;
+    const setMyTurn = (turn) => {
+        myTurn = turn;
+    }
     const changeTurn = () => {
         if (myTurn) {
             myTurn = false;
@@ -91,7 +100,7 @@ const createPlayer = (name,icon) => {
             myTurn = true;
         }
     }
-    return {name,icon,getPlayerMoves,addPlayerMoves,getMyTurn,changeTurn};
+    return {name,icon,getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
 }
 
 gameboard.createBoard(3);
@@ -99,6 +108,4 @@ const larry = createPlayer('Larry','X');
 const jasmine = createPlayer('Jasmine','O');
 game.addPlayerToGame(larry);
 game.addPlayerToGame(jasmine);
-
-
-
+game.randomizeActivePlayer();
