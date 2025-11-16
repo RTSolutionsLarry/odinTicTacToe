@@ -35,6 +35,9 @@ const game = (() => {
     const isWon = () => win;
     const getPlayerList = () => playerList;
     const getActivePlayer = () => activePlayer;
+    const setActivePlayer = (player) => {
+        activePlayer = player;
+    }
     const checkForWin = (arrayOfMoves) => {
         
         const winConditionOne = [1,2,3];
@@ -66,21 +69,32 @@ const game = (() => {
     const randomizeActivePlayer = () => {
         const randomIndex = Math.floor(Math.random() * playerList.length);
         const randomPlayer = playerList[randomIndex];
-        randomPlayer.setMyTurn(true);        
+        randomPlayer.setMyTurn(true);
+        setActivePlayer(randomPlayer);       
     }
     
     const changeActivePlayer = () => {
         if (playerList[0].myTurn) {
             playerList[0].myTurn = false;
             playerList[1].myTurn = true;
+            setActivePlayer(playerList[1]);
         } else {
             playerList[0].myTurn = true;
             playerList[1].myTurn = false;
+            setActivePlayer(playerList[0]);
         }
     }
 
+    const setPlayers = () => {
+        const playerOneName = prompt('Player 1 Name: ');
+        const playerTwoName = prompt('Player 2 Name: ');
+        const playerOne = createPlayer(playerOneName, 'X');
+        const playerTwo = createPlayer(playerTwoName, 'O');
+        addPlayerToGame(playerOne);
+        addPlayerToGame(playerTwo);
+    }
 
-    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer};
+    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer, setPlayers};
 })();
 
 const createPlayer = (name,icon) => {
@@ -104,8 +118,7 @@ const createPlayer = (name,icon) => {
 }
 
 gameboard.createBoard(3);
-const larry = createPlayer('Larry','X');
-const jasmine = createPlayer('Jasmine','O');
-game.addPlayerToGame(larry);
-game.addPlayerToGame(jasmine);
+game.setPlayers();
 game.randomizeActivePlayer();
+console.log(game.getPlayerList());
+console.log(game.getActivePlayer());
