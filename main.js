@@ -24,6 +24,13 @@ const gameboard = ( function () {
             }
         }
     }
+
+    const displayPlayers = (playerList) => {
+        for (player of playerList) {
+            //create elements to display player name and score here in this block of code
+        }
+    }
+
     return {createBoard};
 })();
 
