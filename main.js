@@ -26,12 +26,29 @@ const gameboard = ( function () {
     }
 
     const displayPlayers = (playerList) => {
+        let i = 0;
         for (player of playerList) {
             //create elements to display player name and score here in this block of code
+            const playerTitle = document.createElement('h3');
+            playerTitle.classList.add('playerName');
+            playerTitle.textContent = player.name;
+            const playerScore = document.createElement('p');
+            playerScore.classList.add('playerScore');
+            playerScore.textContent = player.getPlayerScore();
+            if (i == 0) {
+                const leftPlayerInformation = document.getElementsByClassName('leftPlayerInformation')[0];
+                leftPlayerInformation.appendChild(playerTitle);
+                leftPlayerInformation.appendChild(playerScore);
+            } else {
+                const rightPlayerInformation = document.getElementsByClassName('rightPlayerInformation')[0];
+                rightPlayerInformation.appendChild(playerTitle);
+                rightPlayerInformation.appendChild(playerScore);
+            }
+            i++;
         }
     }
 
-    return {createBoard};
+    return {createBoard , displayPlayers};
 })();
 
 const game = (() => {
@@ -107,7 +124,9 @@ const game = (() => {
 const createPlayer = (name,icon) => {
     const playerMoves = [];
     let myTurn = false;
+    let playerScore = 0;
 
+    const getPlayerScore = () => playerScore;
     const getPlayerMoves = () => playerMoves;
     const addPlayerMoves = (gridNumber) => playerMoves.push(gridNumber);
     const getMyTurn = () => myTurn;
@@ -121,7 +140,7 @@ const createPlayer = (name,icon) => {
             myTurn = true;
         }
     }
-    return {name,icon,getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
+    return {name,icon,getPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
 }
 
 gameboard.createBoard(3);
@@ -129,3 +148,7 @@ game.setPlayers();
 game.randomizeActivePlayer();
 console.log(game.getPlayerList());
 console.log(game.getActivePlayer());
+const players = game.getPlayerList();
+console.log(players);
+
+gameboard.displayPlayers(players);
