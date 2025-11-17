@@ -61,14 +61,14 @@
 
 .leftPlayerInformation,
 .rightPlayerInformation {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
+    text-align: center;
 }
 
 .playerName {
-
+    align-self: flex-start;
+    margin-top: 30vh;
 }
 
 .playerScore {
-    
+    margin-top: 20px;
 }
