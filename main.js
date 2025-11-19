@@ -24,6 +24,11 @@ const gameboard = ( function () {
     }
 
     const playIcon = (gameSquare) => {
+        if (game.getPlayerList().length == 0) {
+            alert('Press Start Game to add players');
+            return;
+        }        
+
         const squareClasses = gameSquare.className.split(' ');     
         const squareNumber = squareClasses[1];
         
@@ -98,7 +103,6 @@ const game = (() => {
             console.log(`${player.name} wins`);  
         } else {
             console.log('No winner yet?!');
-            
         }
     }
     const addPlayerToGame = (player) => {
@@ -114,8 +118,6 @@ const game = (() => {
     }
     
     const changeActivePlayer = () => {
-        console.log(playerList[0].getMyTurn());
-        console.log(playerList[1].getMyTurn());
         
         if (playerList[0].getMyTurn()) {
             playerList[0].changeTurn();
