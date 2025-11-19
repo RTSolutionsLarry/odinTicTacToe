@@ -28,7 +28,14 @@ const gameboard = ( function () {
         const squareNumber = squareClasses[1];
         console.log(squareNumber);
         
+        const activePlayer = game.getActivePlayer();
+        activePlayer.addPlayerMoves(squareNumber);
+        console.log(activePlayer);
+        const checkPlayerMoves = activePlayer.getPlayerMoves();
+        console.log(checkPlayerMoves);
         
+        game.checkForWin(checkPlayerMoves,activePlayer);
+        game.changeActivePlayer();
     }
 
     const displayPlayers = (playerList) => {
@@ -53,7 +60,7 @@ const gameboard = ( function () {
         }
     }
 
-    return {createBoard , displayPlayers};
+    return {createBoard , displayPlayers , playIcon};
 })();
 
 const game = (() => {
@@ -67,7 +74,8 @@ const game = (() => {
     const setActivePlayer = (player) => {
         activePlayer = player;
     }
-    const checkForWin = (arrayOfMoves) => {
+    const checkForWin = (stringArrayOfMoves,player) => {
+        const arrayOfMoves = stringArrayOfMoves.map(Number);
         
         const winConditionOne = [1,2,3];
         const winConditionTwo = [4,5,6];
@@ -88,7 +96,11 @@ const game = (() => {
             winConditionSeven.every(value => arrayOfMoves.includes(value)) ||
             winConditionEight.every(value => arrayOfMoves.includes(value))
         ) {
-            win = true;  
+            win = true;
+            console.log(`${player.name} wins`);  
+        } else {
+            console.log('No winner yet?!');
+            
         }
     }
     const addPlayerToGame = (player) => {
@@ -99,7 +111,8 @@ const game = (() => {
         const randomIndex = Math.floor(Math.random() * playerList.length);
         const randomPlayer = playerList[randomIndex];
         randomPlayer.setMyTurn(true);
-        setActivePlayer(randomPlayer);       
+        setActivePlayer(randomPlayer);
+        console.log(game.getActivePlayer());       
     }
     
     const changeActivePlayer = () => {
@@ -123,7 +136,18 @@ const game = (() => {
         addPlayerToGame(playerTwo);
     }
 
-    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer, setPlayers};
+    const startGame = () => {
+        gameboard.createBoard(3);
+        const startGameButton = document.getElementsByClassName('startGameButton')[0];
+        startGameButton.addEventListener('click',()=>{
+            game.setPlayers();
+            const players = game.getPlayerList();
+            gameboard.displayPlayers(players);
+            game.randomizeActivePlayer();
+        })
+    }
+
+    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer, setPlayers, startGame};
 })();
 
 const createPlayer = (name,icon) => {
@@ -148,13 +172,5 @@ const createPlayer = (name,icon) => {
     return {name,icon,getPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
 }
 
-const startGameButton = document.getElementsByClassName('startGameButton')[0];
-startGameButton.addEventListener('click',()=>{
-    game.setPlayers();
-    const players = game.getPlayerList();
-    gameboard.displayPlayers(players);
-    game.randomizeActivePlayer();
-})
-
-gameboard.createBoard(3);
+game.startGame();
 
