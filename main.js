@@ -16,11 +16,11 @@ const gameboard = ( function () {
                 const gameSquare = document.createElement('div');
                 gameSquare.classList.add('gameSquare');
                 gameSquare.classList.add(gameSquareNumber);
-                gameSquareNumber++;
                 gameSquare.addEventListener('click', (player)=> {
-
+                    console.log(gameSquareNumber);                    
                 })
                 gameBoardContainer.appendChild(gameSquare);
+                gameSquareNumber++;                
             }
         }
     }
@@ -28,7 +28,6 @@ const gameboard = ( function () {
     const displayPlayers = (playerList) => {
         let i = 0;
         for (player of playerList) {
-            //create elements to display player name and score here in this block of code
             const playerTitle = document.createElement('h3');
             playerTitle.classList.add('playerName');
             playerTitle.textContent = player.name;
@@ -143,12 +142,12 @@ const createPlayer = (name,icon) => {
     return {name,icon,getPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
 }
 
-gameboard.createBoard(3);
-game.setPlayers();
-game.randomizeActivePlayer();
-console.log(game.getPlayerList());
-console.log(game.getActivePlayer());
-const players = game.getPlayerList();
-console.log(players);
+const startGameButton = document.getElementsByClassName('startGameButton')[0];
+startGameButton.addEventListener('click',()=>{
+    game.setPlayers();
+    gameboard.displayPlayers(players);
+    game.randomizeActivePlayer();
+})
 
-gameboard.displayPlayers(players);
+gameboard.createBoard(3);
+
