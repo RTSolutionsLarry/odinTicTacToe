@@ -105,10 +105,17 @@ const game = (() => {
             player.addPlayerScore();
             const playerNewScore = player.getPlayerScore();            
             const score = document.getElementsByClassName(`playerScore ${player.name}`)[0];
-            console.log(score);
             score.innerText = player.getPlayerScore();
+            game.resetMoves();
         } else {
             console.log('No winner yet?!');
+        }
+    }
+
+    const resetMoves = () => {
+        const playersToReset = game.getPlayerList();
+        for (player of playersToReset) {
+            player.resetMoveAllMoves();
         }
     }
 
@@ -156,13 +163,17 @@ const game = (() => {
         })
     }
 
-    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer, setPlayers, startGame};
+    return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer, setPlayers, startGame , resetMoves};
 })();
 
 const createPlayer = (name,icon) => {
-    const playerMoves = [];
+    let playerMoves = [];
     let myTurn = false;
     let playerScore = 0;
+
+    const resetMoveAllMoves = () => {
+        playerMoves = [];
+    }
 
     const getPlayerScore = () => playerScore;
     const addPlayerScore = () => playerScore++;
@@ -180,7 +191,7 @@ const createPlayer = (name,icon) => {
             myTurn = true;
         }
     }
-    return {name,icon,getPlayerScore, addPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
+    return {name,icon,getPlayerScore, addPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn , resetMoveAllMoves};
 }
 
 game.startGame();
