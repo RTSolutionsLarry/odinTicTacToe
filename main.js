@@ -16,13 +16,19 @@ const gameboard = ( function () {
                 const gameSquare = document.createElement('div');
                 gameSquare.classList.add('gameSquare');
                 gameSquare.classList.add(gameSquareNumber);
-                gameSquare.addEventListener('click', (player)=> {
-                    console.log(gameSquareNumber);                    
-                })
+                gameSquare.addEventListener('click', () => playIcon(gameSquare));
                 gameBoardContainer.appendChild(gameSquare);
                 gameSquareNumber++;                
             }
         }
+    }
+
+    const playIcon = (gameSquare) => {
+        const squareClasses = gameSquare.className.split(' ');     
+        const squareNumber = squareClasses[1];
+        console.log(squareNumber);
+        
+        
     }
 
     const displayPlayers = (playerList) => {
@@ -145,6 +151,7 @@ const createPlayer = (name,icon) => {
 const startGameButton = document.getElementsByClassName('startGameButton')[0];
 startGameButton.addEventListener('click',()=>{
     game.setPlayers();
+    const players = game.getPlayerList();
     gameboard.displayPlayers(players);
     game.randomizeActivePlayer();
 })
