@@ -26,13 +26,11 @@ const gameboard = ( function () {
     const playIcon = (gameSquare) => {
         const squareClasses = gameSquare.className.split(' ');     
         const squareNumber = squareClasses[1];
-        console.log(squareNumber);
         
         const activePlayer = game.getActivePlayer();
+        
         activePlayer.addPlayerMoves(squareNumber);
-        console.log(activePlayer);
         const checkPlayerMoves = activePlayer.getPlayerMoves();
-        console.log(checkPlayerMoves);
         
         game.checkForWin(checkPlayerMoves,activePlayer);
         game.changeActivePlayer();
@@ -116,13 +114,16 @@ const game = (() => {
     }
     
     const changeActivePlayer = () => {
-        if (playerList[0].myTurn) {
-            playerList[0].myTurn = false;
-            playerList[1].myTurn = true;
+        console.log(playerList[0].getMyTurn());
+        console.log(playerList[1].getMyTurn());
+        
+        if (playerList[0].getMyTurn()) {
+            playerList[0].changeTurn();
+            playerList[1].changeTurn();
             setActivePlayer(playerList[1]);
         } else {
-            playerList[0].myTurn = true;
-            playerList[1].myTurn = false;
+            playerList[0].changeTurn();
+            playerList[1].changeTurn();
             setActivePlayer(playerList[0]);
         }
     }
