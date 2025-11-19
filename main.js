@@ -49,6 +49,7 @@ const gameboard = ( function () {
             playerTitle.textContent = player.name;
             const playerScore = document.createElement('p');
             playerScore.classList.add('playerScore');
+            playerScore.classList.add(player.name);
             playerScore.textContent = player.getPlayerScore();
             if (i == 0) {
                 const leftPlayerInformation = document.getElementsByClassName('leftPlayerInformation')[0];
@@ -100,11 +101,17 @@ const game = (() => {
             winConditionEight.every(value => arrayOfMoves.includes(value))
         ) {
             win = true;
-            console.log(`${player.name} wins`);  
+            console.log(`${player.name} wins`);
+            player.addPlayerScore();
+            const playerNewScore = player.getPlayerScore();            
+            const score = document.getElementsByClassName(`playerScore ${player.name}`)[0];
+            console.log(score);
+            score.innerText = player.getPlayerScore();
         } else {
             console.log('No winner yet?!');
         }
     }
+
     const addPlayerToGame = (player) => {
         playerList.push(player);
     }
@@ -114,7 +121,6 @@ const game = (() => {
         const randomPlayer = playerList[randomIndex];
         randomPlayer.setMyTurn(true);
         setActivePlayer(randomPlayer);
-        console.log(game.getActivePlayer());       
     }
     
     const changeActivePlayer = () => {
@@ -159,6 +165,8 @@ const createPlayer = (name,icon) => {
     let playerScore = 0;
 
     const getPlayerScore = () => playerScore;
+    const addPlayerScore = () => playerScore++;
+
     const getPlayerMoves = () => playerMoves;
     const addPlayerMoves = (gridNumber) => playerMoves.push(gridNumber);
     const getMyTurn = () => myTurn;
@@ -172,7 +180,7 @@ const createPlayer = (name,icon) => {
             myTurn = true;
         }
     }
-    return {name,icon,getPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
+    return {name,icon,getPlayerScore, addPlayerScore, getPlayerMoves,addPlayerMoves,getMyTurn,setMyTurn,changeTurn};
 }
 
 game.startGame();
