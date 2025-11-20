@@ -27,7 +27,11 @@ const gameboard = ( function () {
         if (game.getPlayerList().length == 0) {
             alert('Press Start Game to add players');
             return;
-        }        
+        }
+        
+        if (gameSquare.children.length > 0) {
+            return;
+        }
 
         const squareClasses = gameSquare.className.split(' ');     
         const squareNumber = squareClasses[1];
