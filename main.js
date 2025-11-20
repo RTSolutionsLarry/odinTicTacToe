@@ -36,6 +36,12 @@ const gameboard = ( function () {
         
         activePlayer.addPlayerMoves(squareNumber);
         const checkPlayerMoves = activePlayer.getPlayerMoves();
+
+        const icon = document.createElement('p');
+        icon.classList.add('icon');
+        icon.innerText = activePlayer.icon;
+        gameSquare.appendChild(icon);
+
         
         game.checkForWin(checkPlayerMoves,activePlayer);
         game.changeActivePlayer();

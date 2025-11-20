@@ -54,6 +54,9 @@
 
 .gameSquare {
     border: solid black 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .gameBoardContainer {
@@ -76,4 +79,9 @@
 
 .playerScore {
     margin-top: 20px;
+}
+
+.icon {
+    font-family: 'HappyText';
+    font-size: 100px;
 }
