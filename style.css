@@ -94,3 +94,8 @@
 .hidden {
     display: none;
 }
+
+.highlight {
+    font-size: larger;
+    color: red;
+}

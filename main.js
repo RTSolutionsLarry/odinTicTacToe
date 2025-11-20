@@ -138,18 +138,15 @@ const game = (() => {
             winConditionEight.every(value => arrayOfMoves.includes(value))
         ) {
             win = true;
-            console.log(`${player.name} wins`);
             player.addPlayerScore();
             const playerNewScore = player.getPlayerScore();            
             const score = document.getElementsByClassName(`playerScore ${player.name}`)[0];
             score.innerText = player.getPlayerScore();
             alert(`${player.name} wins`);
             gameboard.setGameisDone();
-            console.log(gameboard.getGameIsDone());
             
             return true;
         } else {
-            console.log('No winner yet?!');
             return false;
         }
     }
