@@ -17,7 +17,8 @@
     height: 100vh;
 }
 
-.startGameButton {
+.startGameButton,
+.resetGameButton {
     margin-top: 15px;
     cursor: pointer;
 }
@@ -85,4 +86,8 @@
 .icon {
     font-family: 'HappyText';
     font-size: 100px;
+}
+
+.hidden {
+    display: none;
 }

@@ -165,11 +165,14 @@ const game = (() => {
     const startGame = () => {
         gameboard.createBoard(3);
         const startGameButton = document.getElementsByClassName('startGameButton')[0];
+        const resetGameButton = document.getElementsByClassName('resetGameButton')[0];
         startGameButton.addEventListener('click',()=>{
             game.setPlayers();
             const players = game.getPlayerList();
             gameboard.displayPlayers(players);
             game.randomizeActivePlayer();
+            startGameButton.classList.add('hidden');
+            resetGameButton.classList.remove('hidden');
         })
     }
 
