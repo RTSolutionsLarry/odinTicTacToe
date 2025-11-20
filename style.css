@@ -74,9 +74,12 @@
     text-align: center;
 }
 
+.iconInformation {
+    margin-top: 20vh;
+}
+
 .playerName {
     align-self: flex-start;
-    margin-top: 30vh;
 }
 
 .playerScore {

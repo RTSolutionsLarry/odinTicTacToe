@@ -48,7 +48,22 @@ const gameboard = ( function () {
 
         
         game.checkForWin(checkPlayerMoves,activePlayer);
+
+        if (game.checkForWin(checkPlayerMoves,activePlayer)) {
+            alert(`${player.name} wins`);
+            game.resetMoves();
+            gameboard.clearIcons();
+            return;            
+        }
+
         game.changeActivePlayer();
+    }
+
+    const clearIcons = () => {
+        const icons = document.getElementsByClassName('icon');
+        while (icons.length > 0) {
+            icons[0].parentNode.removeChild(icons[0]);
+        }
     }
 
     const displayPlayers = (playerList) => {
@@ -57,16 +72,26 @@ const gameboard = ( function () {
             const playerTitle = document.createElement('h3');
             playerTitle.classList.add('playerName');
             playerTitle.textContent = player.name;
+
             const playerScore = document.createElement('p');
             playerScore.classList.add('playerScore');
             playerScore.classList.add(player.name);
             playerScore.textContent = player.getPlayerScore();
+
+            const playerIcon = document.createElement('p');
+            playerIcon.classList.add('icon');
+            playerIcon.classList.add('iconInformation');
+            playerIcon.innerText = player.icon;
+
             if (i == 0) {
                 const leftPlayerInformation = document.getElementsByClassName('leftPlayerInformation')[0];
+                leftPlayerInformation.appendChild(playerIcon);                
                 leftPlayerInformation.appendChild(playerTitle);
                 leftPlayerInformation.appendChild(playerScore);
+
             } else {
                 const rightPlayerInformation = document.getElementsByClassName('rightPlayerInformation')[0];
+                rightPlayerInformation.appendChild(playerIcon);
                 rightPlayerInformation.appendChild(playerTitle);
                 rightPlayerInformation.appendChild(playerScore);
             }
@@ -74,7 +99,7 @@ const gameboard = ( function () {
         }
     }
 
-    return {createBoard , displayPlayers , playIcon};
+    return {createBoard , displayPlayers , playIcon, clearIcons};
 })();
 
 const game = (() => {
@@ -116,9 +141,10 @@ const game = (() => {
             const playerNewScore = player.getPlayerScore();            
             const score = document.getElementsByClassName(`playerScore ${player.name}`)[0];
             score.innerText = player.getPlayerScore();
-            game.resetMoves();
+            return true;
         } else {
             console.log('No winner yet?!');
+            return false;
         }
     }
 
