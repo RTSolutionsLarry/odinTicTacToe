@@ -16,11 +16,20 @@ const gameboard = ( function () {
                 const gameSquare = document.createElement('div');
                 gameSquare.classList.add('gameSquare');
                 gameSquare.classList.add(gameSquareNumber);
+                gameBoardContainer.appendChild(gameSquare);                
                 gameSquare.addEventListener('click', () => playIcon(gameSquare));
-                gameBoardContainer.appendChild(gameSquare);
                 gameSquareNumber++;                
             }
         }
+    }
+
+    let gameIsDone = false;
+    const getGameIsDone = () => gameIsDone;
+    const setGameisDone = () => {
+        gameIsDone = true;
+    }
+    const resetGameIsDone = () => {
+        gameIsDone = false;
     }
 
     const playIcon = (gameSquare) => {
@@ -29,7 +38,7 @@ const gameboard = ( function () {
             return;
         }
         
-        if (gameSquare.children.length > 0) {
+        if (gameSquare.children.length > 0 || gameboard.getGameIsDone() == true) {
             return;
         }
 
@@ -43,24 +52,17 @@ const gameboard = ( function () {
 
         const icon = document.createElement('p');
         icon.classList.add('icon');
+        icon.classList.add('gridIcon');        
         icon.innerText = activePlayer.icon;
         gameSquare.appendChild(icon);
 
-        
         game.checkForWin(checkPlayerMoves,activePlayer);
-
-        if (game.checkForWin(checkPlayerMoves,activePlayer)) {
-            alert(`${player.name} wins`);
-            game.resetMoves();
-            gameboard.clearIcons();
-            return;            
-        }
 
         game.changeActivePlayer();
     }
 
     const clearIcons = () => {
-        const icons = document.getElementsByClassName('icon');
+        const icons = document.getElementsByClassName('gridIcon');
         while (icons.length > 0) {
             icons[0].parentNode.removeChild(icons[0]);
         }
@@ -99,7 +101,7 @@ const gameboard = ( function () {
         }
     }
 
-    return {createBoard , displayPlayers , playIcon, clearIcons};
+    return {createBoard , displayPlayers , playIcon, clearIcons, getGameIsDone, setGameisDone, resetGameIsDone};
 })();
 
 const game = (() => {
@@ -141,6 +143,10 @@ const game = (() => {
             const playerNewScore = player.getPlayerScore();            
             const score = document.getElementsByClassName(`playerScore ${player.name}`)[0];
             score.innerText = player.getPlayerScore();
+            alert(`${player.name} wins`);
+            gameboard.setGameisDone();
+            console.log(gameboard.getGameIsDone());
+            
             return true;
         } else {
             console.log('No winner yet?!');
@@ -200,6 +206,13 @@ const game = (() => {
             startGameButton.classList.add('hidden');
             resetGameButton.classList.remove('hidden');
         })
+        resetGameButton.addEventListener('click',()=> {
+            game.resetMoves();
+            gameboard.clearIcons();
+            gameboard.resetGameIsDone();
+        })
+                    
+            
     }
 
     return {isWon , getPlayerList, getActivePlayer, checkForWin, addPlayerToGame, randomizeActivePlayer, changeActivePlayer, setPlayers, startGame , resetMoves};
